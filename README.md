@@ -1,4 +1,4 @@
-# genresortify
+# spotify_playlist_analyzer
 
 A new Flutter project.
 
