@@ -28,12 +28,14 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var playlist;
   var features;
+  late Future<List<RawDataSet>> dataSet;
 
   @override
   void initState() {
     track = getTrack(spotify);
     print(track);
     print(features);
+    dataSet = getAudioFeaturesDataSet(spotify);
 
     super.initState();
   }
@@ -58,12 +60,14 @@ class _HomeViewState extends State<HomeView> {
             ),
             AspectRatio(
               aspectRatio: 1.8,
-              child: FutureBuilder(
-                future: getAudioFeaturesDataSet(spotify),
+              child: FutureBuilder<List<RawDataSet>>(
+                future: dataSet,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    List<RawDataSet>? data = snapshot.data;
                     return AudioFeaturesChart(
                       spotify: spotify,
+                      chartData: data,
                     );
                   } else {
                     return CircularProgressIndicator();

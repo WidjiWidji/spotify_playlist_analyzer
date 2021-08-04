@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:genresortify/assets/colors/colors.dart';
 import 'package:spotify/spotify.dart';
-import 'package:genresortify/spotifyApi/id/secret.dart';
 
 class AudioFeaturesChart extends StatelessWidget {
   final SpotifyApi spotify;
+  final List<RawDataSet>? chartData;
 
-  const AudioFeaturesChart({Key? key, required this.spotify}) : super(key: key);
+  const AudioFeaturesChart({
+    Key? key,
+    required this.spotify,
+    this.chartData,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RadarChart(
       RadarChartData(
-        dataSets: showingDataSets(spotify),
+        dataSets: showingDataSets(spotify, chartData),
         radarBackgroundColor: Colors.transparent,
         borderData: FlBorderData(show: true),
         radarBorderData: const BorderSide(
@@ -54,7 +58,7 @@ class AudioFeaturesChart extends StatelessWidget {
   }
 }
 
-Future<RawDataSet> getAudioFeaturesDataSet(SpotifyApi spotify) async {
+Future<List<RawDataSet>> getAudioFeaturesDataSet(SpotifyApi spotify) async {
   double danceSum = 0,
       energySum = 0,
       speechSum = 0,
@@ -94,24 +98,28 @@ Future<RawDataSet> getAudioFeaturesDataSet(SpotifyApi spotify) async {
   valenceAvg = valenceSum / size;
   liveAvg = liveSum / size;
 
-  return RawDataSet(
-    title: 'Song Audio Features',
-    color: spotifyGreenColor,
-    values: [
-      danceAvg,
-      energyAvg,
-      speechAvg,
-      acousticAvg,
-      instrumentAvg,
-      valenceAvg,
-      liveAvg
-    ],
-  );
+  List<RawDataSet> chartData = [
+    RawDataSet(
+      title: 'Song Audio Features',
+      color: spotifyGreenColor,
+      values: [
+        danceAvg,
+        energyAvg,
+        speechAvg,
+        acousticAvg,
+        instrumentAvg,
+        valenceAvg,
+        liveAvg
+      ],
+    ),
+  ];
+  return chartData;
 }
 
-List<RadarDataSet> showingDataSets(SpotifyApi spotify) {
-  Future<RawDataSet> list = getAudioFeaturesDataSet(spotify);
-  List<RawDataSet> res = list as List<RawDataSet>;
+List<RadarDataSet> showingDataSets(
+    SpotifyApi spotify, List<RawDataSet>? chartData) {
+  List<RawDataSet> list = chartData!;
+  List<RawDataSet> res = list; //need to fix how do we go from Future to List
   return res.asMap().entries.map((entry) {
     var index = entry.key;
     var rawDataSet = entry.value;
