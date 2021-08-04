@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:genresortify/assets/colors/colors.dart';
 import 'package:spotify/spotify.dart';
+import 'package:genresortify/spotifyApi/services/get_methods.dart';
 
 class AudioFeaturesChart extends StatelessWidget {
   final SpotifyApi spotify;
@@ -73,11 +74,55 @@ Future<List<RawDataSet>> getAudioFeaturesDataSet(SpotifyApi spotify) async {
       instrumentAvg,
       valenceAvg,
       liveAvg;
+  Playlist playlistName = await getPlaylist(spotify);
+  Pages<Track> tracks = getPlaylistTracks(spotify);
+  Iterable<Track> tracksIt = await tracks.all();
   Iterable<String> trackIds = [
-    '1AROE0XcC4ySCxXF65mutZ',
-    '5k5fWendNngd89O8JKoE8L',
-    '1AROE0XcC4ySCxXF65mutZ'
+    '0fea68AdmYNygeTGI4RC18',
+    '2TH65lNHgvLxCKXM3apjxI',
+    '4MzXwWMhyBbmu6hOcLVD49',
+    '1Ej96GIBCTvgH7tNX1r3qr',
+    '7mWFF4gPADjTQjC97CgFVt',
+    '0GzuHFG4Ql6DoyxFRnIk3F',
+    '7rwX0O3RlxqqIjQM8evm5E',
+    '4R8BJggjosTswLxtkw8V7P',
+    '7MmrcXVA7A5zZ2CbDuGHNa',
+    '4nbWX2HzrOEnX4xxvYRCyU',
+    '4CLkDJ4xLqkV4Vt2vPOny1',
+    '2L95U6syP0bV3fkYYOzmiW',
+    '0KkIkfsLEJbrcIhYsCL7L5',
+    '3GVhFY1hAKPW5TiWM2TnpV',
+    '25ZAibhr3bdlMCLmubZDVt',
   ];
+  print('playlist image: ${playlistName.images!.length}');
+  print(
+      'Getting tracks from playlist: ${playlistName.name} made by ${playlistName.owner!.displayName}');
+  print('Follower: ${playlistName.followers!.total}');
+
+  List<String?> preTrackIds = [];
+  int i = 0;
+  for (Track track in tracksIt) {
+    if (i < 99) {
+      preTrackIds.add(track.id);
+      print('song: ${track.name}: ${track.id}');
+    } else {
+      break;
+    }
+  }
+  /*
+  for (int i = 0; i < 50; i++) {
+    preTrackIds.add(tracksIt.elementAt(i).id);
+    print('song: ${tracksIt.elementAt(i).name}: ${tracksIt.elementAt(i).id}');
+  }
+  */
+
+  for (var id in preTrackIds) {
+    i++;
+    print("'$id',");
+  }
+  //trackIds = preTrackIds as Iterable<String>;
+  print('${trackIds.length}');
+
   Iterable<AudioFeature> features = await spotify.audioFeatures.list(trackIds);
   for (var i in features) {
     danceSum += i.danceability!;
