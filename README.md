@@ -1,16 +1,11 @@
 # spotify_playlist_analyzer
 
-A new Flutter project.
 
-## Getting Started
+![Screen Shot 2022-07-29 at 9 23 14 PM](https://user-images.githubusercontent.com/13011218/181872191-5e383aa4-3c5f-461f-95d2-517b4d79bcda.png)
 
-This project is a starting point for a Flutter application.
+![Screen Shot 2022-07-29 at 9 25 00 PM](https://user-images.githubusercontent.com/13011218/181872240-0af8d4ed-6153-4155-9393-24e1b9b53070.png)
 
-A few resources to get you started if this is your first Flutter project:
+Had update to add link but issues with loading in charts
+https://user-images.githubusercontent.com/13011218/181872192-2cd8625d-bd24-4461-bdf4-4efc40152299.mov
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
